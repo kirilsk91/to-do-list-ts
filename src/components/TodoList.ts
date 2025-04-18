@@ -1,7 +1,8 @@
 import { TodoItem } from "../types";
 
 export const renderTodoList = (todoList: TodoItem[]): HTMLElement => {
-  const ulElement = document.createElement("el");
+  const ulElement = document.createElement("ul");
+  const fragment = document.createDocumentFragment();
 
   todoList.forEach((todoItem: TodoItem): void => {
     const liElement = document.createElement("li");
@@ -22,8 +23,9 @@ export const renderTodoList = (todoList: TodoItem[]): HTMLElement => {
     spanElement.textContent = todoItem.text;
 
     liElement.append(checkboxElement, spanElement);
-    ulElement.appendChild(liElement);
+    fragment.appendChild(liElement);
   });
 
+  ulElement.appendChild(fragment);
   return ulElement;
 };
