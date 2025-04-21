@@ -21,6 +21,7 @@ export const renderTodoList = (todoList: TodoItem[]): HTMLElement => {
     checkboxElement.checked = todoItem.isDone;
 
     spanElement.textContent = todoItem.text;
+    spanElement.classList.add("span-content");
 
     liElement.append(checkboxElement, spanElement);
     fragment.appendChild(liElement);

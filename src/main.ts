@@ -1,24 +1,10 @@
 import { renderInput } from "./components/TodoInput";
 import { renderTodoList } from "./components/TodoList";
+import { loadTodoList } from "./helpers/getTodos";
+import { saveTodoList } from "./helpers/saveTodos";
 import { TodoItem } from "./types";
 
-const todos: TodoItem[] = [
-  // {
-  //   id: 1,
-  //   text: "abca",
-  //   isDone: false,
-  // },
-  // {
-  //   id: 2,
-  //   text: "asd121",
-  //   isDone: false,
-  // },
-  // {
-  //   id: 3,
-  //   text: "fa4das",
-  //   isDone: false,
-  // },
-];
+let todos: TodoItem[] = loadTodoList();
 
 const appRoot = document.getElementById("app");
 
@@ -29,12 +15,25 @@ const initialize = (
   const headerElement = document.createElement("header");
   const h1Element = document.createElement("h1");
   const inputElement = renderInput();
+  const labelElement = document.createElement("label");
   const listElement = renderTodoList(todoList);
 
-  h1Element.textContent = "To do list";
+  // <label for="todo-input" class="form-label">Notes:</label>
+  labelElement.htmlFor = "todo-input";
+  labelElement.classList.add("form-label");
+  labelElement.innerText = "Notes:";
+
+  appRoot.classList.add("col-3");
+
+  h1Element.textContent = "Tasks";
 
   headerElement.appendChild(h1Element);
-  appRoot.append(headerElement, inputElement, listElement);
+  appRoot.append(
+    headerElement,
+    labelElement,
+    inputElement,
+    listElement
+  );
 
   // Handle adding tasks
   const handleSubmit = (event: Event): void => {
@@ -57,12 +56,14 @@ const initialize = (
       todos.push(newTask);
       const updatedTodoList: HTMLElement = renderTodoList(todos);
 
+      // Remove ol <ul> before placing a new one
       const oldList = appRoot.querySelector("ul");
       if (oldList) {
         oldList.remove();
       }
 
       appRoot.appendChild(updatedTodoList);
+      saveTodoList(todos);
       inputField.value = "";
     }
   };

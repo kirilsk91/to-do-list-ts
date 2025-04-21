@@ -13,12 +13,17 @@ export const renderInput = (): HTMLFormElement => {
   inputElement.id = "todo-input";
   // inputElement.name = "todo-input";
   inputElement.classList.add("form-control");
-  inputElement.placeholder = "Add a new task...";
 
   const buttonElement = document.createElement("button");
   buttonElement.type = "submit";
   buttonElement.classList.add("btn", "btn-primary");
   buttonElement.textContent = "Add";
+  buttonElement.style.display = "none";
+
+  inputElement.addEventListener("input", () => {
+    buttonElement.style.display =
+      inputElement.value.trim() === "" ? "none" : "inline-block";
+  });
 
   formElement.append(inputElement, buttonElement);
   return formElement;
