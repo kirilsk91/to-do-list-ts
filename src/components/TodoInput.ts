@@ -17,7 +17,7 @@ export const renderInput = (): HTMLFormElement => {
   const buttonElement = document.createElement("button");
   buttonElement.type = "submit";
   buttonElement.classList.add("btn", "btn-primary");
-  buttonElement.textContent = "Add";
+  buttonElement.textContent = "+";
   buttonElement.style.display = "none";
 
   inputElement.addEventListener("input", () => {
